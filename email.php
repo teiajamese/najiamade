@@ -24,18 +24,15 @@ get_header();
 			'showsubmit' => true, 
 			'submittxt' => 'Submit', 
 			'jsthanks' => false,
+			'thankyou' => '',
 		);
 
 		echo smlsubform($args); 
 
-		if (isset($_POST['sml_subscribe']))
-    {   
+		
     ?>
-<script type="text/javascript">
-window.location = "/najiamade/home";
-</script>      
-    <?php
-    }?>
+     
+    
 	</div>
 </div>
 <?php get_footer(); ?>

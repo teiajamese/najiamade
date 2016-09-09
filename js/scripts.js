@@ -107,6 +107,13 @@
 		  $form.trigger('submit');
 		});
 
+		$('.menu').click(function(){
+			$('.menu-bar').toggle();
+		});
+
+    /*$( "#imageLabel" ).click(function() {
+      $( "#imageLoader" ).click();
+  });*/
 
 });
 })(jQuery, this);

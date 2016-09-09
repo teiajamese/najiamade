@@ -3,10 +3,10 @@
 <html <?php language_attributes(); ?> class="no-js">
 	<head>
 		<meta charset="<?php bloginfo('charset'); ?>">
-		<title><?php wp_title(''); ?><?php if(wp_title('', false)) { echo ' :'; } ?> <?php bloginfo('name'); ?></title>
+		<title> <?php bloginfo('name'); ?></title>
 
 		<link href="//www.google-analytics.com" rel="dns-prefetch">
-        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="<?php echo get_template_directory_uri(); ?>/img/icons/favicon.ico?v=2" rel="shortcut icon">
         <link href="<?php echo get_template_directory_uri(); ?>/img/icons/touch.png" rel="apple-touch-icon-precomposed">
 
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,11 +22,13 @@
             tests: {}
         });
         </script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script src="<?php echo get_template_directory_uri(); ?>/cropit-master/dist/jquery.cropit.js"></script>
+
+<script src="https://use.typekit.net/cuz5ziz.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+    
 	</head>
 	<body <?php body_class(); ?>>
-
+		<div class="container">
 		<!-- wrapper -->
 		<div class="wrapper">
 
@@ -36,8 +38,19 @@
 					<!-- logo -->
 					<div class="logo">
 						<img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="Logo" class="logo-img">
+						
 						<div class="menu">
-
+							<div class="menu-bar" id="menu-bar">
+								<div class="top">
+									<img src="<?php echo get_template_directory_uri(); ?>/img/popouticon.png" alt="Logo" class="logo">
+									<img src="<?php echo get_template_directory_uri(); ?>/img/icons/close.png" class="close" >
+								</div>
+							<ul>
+								<li><a href="http://bit.ly/naijamademe">Nominate a Young Nigerian</a></li>
+								<li><a href="http://bit.ly/naijamadejobs">Submit a Job Opportunity</a></li>
+								<li><a href="mailto:hello@naijamade.me">Contact Us</a></li>
+							</ul>
+						</div>
 						</div>
 					</div>
 					<!-- /logo -->
