@@ -110,7 +110,13 @@
 		$('.menu').click(function(){
 			$('.menu-bar').toggle();
 		});
-
+		$('#share').click(function(){
+			$('#social').show();
+		})
+		$('.close').click(function(){
+			$('#social').hide();
+		})
+		
     /*$( "#imageLabel" ).click(function() {
       $( "#imageLoader" ).click();
   });*/

@@ -34,16 +34,24 @@ get_header();
    
 </div>
  <form method="post" accept-charset="utf-8" name="form1">
-            <input name="hidden_data" id='hidden_data' type="hidden"/>
-        </form>
-<button id="clockwise" >Rotate right</button>
-<button id="counterclockwise">Rotate left</button>
-<?php/* if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
-    ADDTOANY_SHARE_SAVE_KIT( array( 
-        'linkname' => 'Example Page',
-        'linkurl'  => 'https://example.com/page.html',
-    ) );
-} */?>
+    <input name="hidden_data" id='hidden_data' type="hidden"/>
+</form>
+<!--<button id="clockwise" >Rotate right</button>
+<button id="counterclockwise">Rotate left</button>-->
+<div id="social" class="overlay">
+    
+    <div class="event-menu-close close">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+    </div>
+    <div class="overlay-content">
+        <?php if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
+            ADDTOANY_SHARE_SAVE_KIT( array( 
+                'linkurl'  => 'https://example.com/page.html',
+            ) );
+        } ?>
+    </div>
+</div>
 <script>
 var imageLoader = document.getElementById('imageLoader');
     imageLoader.addEventListener('change', handleImage, false);
@@ -144,7 +152,7 @@ function saveViaAJAX()
     document.getElementById('hidden_data').value = canvasData;
     var fd = new FormData(document.forms["form1"]);
         //ajax.setRequestHeader('Content-Type', 'application/upload');
-    console.log(canvasData);
+    //console.log(canvasData);
     //console.log(fd);
     
    ajax.onreadystatechange=function()
@@ -160,8 +168,9 @@ function saveViaAJAX()
             // Write out the filename.
 
             //window.location.href="/"+ajax.responseText;
-            var newurl = '/wp-content/themes/html5blank-stable/'+ajax.responseText;
+            var newurl = window.location.href+'wp-content/themes/html5blank-stable/'+ajax.responseText;
             document.getElementById('share').setAttribute('data-share',newurl);
+            document.getElementsByClassName('addtoany_list')[0].setAttribute('data-a2a-url',newurl);
         }
 
     }
