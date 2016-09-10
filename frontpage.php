@@ -25,22 +25,25 @@ get_header();
 <input type='file' id="imageLoader" name="imageLoader" />
 
 <div class="buttons">
-<img src="<?php echo get_template_directory_uri()?>/img/ShareButton.png">
-<a id="download" download="naijamade.jpg"><img src="<?php echo get_template_directory_uri()?>/img/DownloadButton.png" ></a>
+    <img id="share" src="<?php echo get_template_directory_uri()?>/img/ShareButton.png" onclick="saveViaAJAX();" data-share="">
+    <a id="download" download="naijamade.jpg"><img src="<?php echo get_template_directory_uri()?>/img/DownloadButton.png" ></a>
     
         <label for="imageLoader" id="imageLabel">
             <img src="<?php echo get_template_directory_uri()?>/img/chosefile.png">
         </label>
    
 </div>
+ <form method="post" accept-charset="utf-8" name="form1">
+            <input name="hidden_data" id='hidden_data' type="hidden"/>
+        </form>
 <button id="clockwise" >Rotate right</button>
 <button id="counterclockwise">Rotate left</button>
-<?php if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
+<?php/* if ( function_exists( 'ADDTOANY_SHARE_SAVE_KIT' ) ) { 
     ADDTOANY_SHARE_SAVE_KIT( array( 
         'linkname' => 'Example Page',
         'linkurl'  => 'https://example.com/page.html',
     ) );
-} ?>
+} */?>
 <script>
 var imageLoader = document.getElementById('imageLoader');
     imageLoader.addEventListener('change', handleImage, false);
@@ -60,20 +63,23 @@ function handleImage(e){
         img.onload = function(){
             canvas.width = img.width;
             canvas.height = img.height;
- ctx.translate(canvas.width/2,canvas.height/2);
- ctx.rotate(90*Math.PI/180);
-            ctx.drawImage(img,-img.width/2,-img.width/2);
-            //ctx.drawImage(filterphoto,0,0,canvas.width,canvas.height );
+ //ctx.translate(canvas.width/2,canvas.height/2);
+ //ctx.rotate(90*Math.PI/180);
+            ctx.drawImage(img,0,0,canvas.width,canvas.height);
+            ctx.drawImage(filterphoto,0,0,canvas.width,canvas.height );
         }
         img.src = event.target.result;
- document.getElementById("clockwise").onclick = function() {
+        document.getElementById("clockwise").onclick = function() {
         // Do something else
-         angleInDegrees+=90;
+        angleInDegrees+=90;
 
-    drawRotated(angleInDegrees, img);
+        drawRotated(angleInDegrees, img);
+        }
     }
-    }
-    reader.readAsDataURL(e.target.files[0]);    
+    reader.readAsDataURL(e.target.files[0]); 
+    var canvasData  = canvas.toDataURL('image/jpeg');
+
+   
 
 var share = document.getElementsByClassName('ata_kit');
 //setAttribute("data-a2a-url",filter); 
@@ -104,11 +110,77 @@ var angleInDegrees=0;
 
 
 
+
+//****************************************************************
+
+// Example function save save canvas content into image file.
+
+// www.permadi.com
+
+//****************************************************************
+
+function saveViaAJAX()
+
+{
+
+    //var testCanvas = document.getElementById("testCanvas");
+
+    var canvasData = canvas.toDataURL("image/png");
+
+    var postData = "canvasData="+canvasData;
+    
+
+   // var debugConsole= document.getElementById("debugConsole");
+
+   // debugConsole.value=canvasData;
+
+
+
+    //alert("canvasData ="+canvasData );
+
+    var ajax = new XMLHttpRequest();
+
+    ajax.open("POST",'../wp-content/themes/html5blank-stable/save.php',true);
+    document.getElementById('hidden_data').value = canvasData;
+    var fd = new FormData(document.forms["form1"]);
+        //ajax.setRequestHeader('Content-Type', 'application/upload');
+    console.log(canvasData);
+    //console.log(fd);
+    
+   ajax.onreadystatechange=function()
+
+    {
+
+        if (ajax.readyState == 4)
+
+        {
+            canvasData = this.responseText;
+            //alert(ajax.responseText);
+
+            // Write out the filename.
+
+            //window.location.href="/"+ajax.responseText;
+            var newurl = '/wp-content/themes/html5blank-stable/'+ajax.responseText;
+            document.getElementById('share').setAttribute('data-share',newurl);
+        }
+
+    }
+ajax.send(fd);
+//console.log(ajax.responseText);
+    
+
+}
+
+
+
+
+/*
+
 var counterclockwise = document.getElementById("#counterclockwise").click(function(){ 
     angleInDegrees-=90;
     drawRotated(angleInDegrees);
 });
-
+*/
 function drawRotated(degrees, img){
     
     ctx.clearRect(0,0,canvas.width,canvas.height);
